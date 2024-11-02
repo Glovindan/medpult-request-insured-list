@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import CustomList from '../../../UIKit/CustomList/CustomList';
 import { ItemData, ListColumnData } from '../../../UIKit/CustomList/CustomListTypes';
 import { InsuredListData } from '../../shared/types';
@@ -25,9 +25,21 @@ export default function InsuredList() {
 		new ListColumnData({ name: "", code: "moreButton", fr: 1, isSortable: false, isLink: true, onClick: (props) => { console.log(props) } }),
 	]
 
+	/** Идентификаторы выбранных контрагентов */
+	const [selectedContractorsIds, setSelectedContractorsIds] = useState<string[]>([]);
+	useEffect(() => console.log(selectedContractorsIds), [selectedContractorsIds])
+
 	return (
 		<div className="select-task-list">
-			<CustomList<undefined, InsuredListData> columnsSettings={columns} getDataHandler={Scripts.getInsuredList} isSelectable={true} isMultipleSelect={false} height='70vh' listWidth={2000} />
+			<CustomList<undefined, InsuredListData>
+				columnsSettings={columns}
+				getDataHandler={Scripts.getInsuredList}
+				isSelectable={true}
+				isMultipleSelect={true}
+				height='500px'
+				listWidth={2000}
+				setSelectedItems={(ids: string[]) => setSelectedContractorsIds(ids)}
+			/>
 		</div>
 	)
 }

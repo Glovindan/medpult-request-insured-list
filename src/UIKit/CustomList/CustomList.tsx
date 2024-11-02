@@ -31,11 +31,13 @@ type ListProps<SearchDataType = any, ItemType = any> = {
 	isSelectable?: boolean
 	/** Множественный выбор строк */
 	isMultipleSelect?: boolean
+	/** Присвоить выбранные строки */
+	setSelectedItems?: (ids: string[]) => void
 }
 
 /** Список данных в виде таблицы */
 function CustomList<SearchDataType = any, ItemType = any>(props: ListProps<SearchDataType, ItemType>) {
-	const { height = "100%", listWidth, columnsSettings, getDataHandler, searchData, setSearchHandler, isScrollable = true, getDetailsLayout, isMultipleSelect, isSelectable } = props;
+	const { height = "100%", listWidth, columnsSettings, getDataHandler, searchData, setSearchHandler, isScrollable = true, getDetailsLayout, isMultipleSelect, isSelectable, setSelectedItems } = props;
 
 	// Страница
 	const [page, setPage] = useState<number>(0);
@@ -131,6 +133,11 @@ function CustomList<SearchDataType = any, ItemType = any>(props: ListProps<Searc
 
 	/** Идентификаторы выбранных строк */
 	const [checkedRowsIds, setCheckedRowsIds] = useState<string[]>([]);
+	/** Передача выбранных элементов наружу */
+	useEffect(() => {
+		if (setSelectedItems) setSelectedItems(checkedRowsIds);
+	}, [checkedRowsIds])
+
 	/** Добавление/удаление выбранной строки */
 	const toggleCheckedRow = (id: string) => {
 		const findId = checkedRowsIds.find(checkedId => checkedId === id);

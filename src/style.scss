@@ -2,10 +2,7 @@
 
 @import url('./reset.scss');
 @import url('./UIKit/shared/style.scss');
-@import url('../src/App/components/Header/header.scss');
-@import url('../src/App/components/SelectTaskForm/selectTaskForm.scss');
-@import url('../src/App/components/SelectTaskFiltersForm/selectTaskFiltersForm.scss');
-@import url('../src/App/components/SelectTaskList/selectTaskList.scss');
+@import url('../src/App/components/InsuredList/insuredList.scss');
 
 :root {
 	--medpult-bg-color: #f2f4f6;

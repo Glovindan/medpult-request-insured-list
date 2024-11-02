@@ -77,8 +77,6 @@ export class ItemData<InfoType = string> {
 
 /** Строковое значение колонки */
 export class ItemDataString extends ItemData<undefined> {
-	value: string
-
 	constructor(value: string) {
 		super({ value: value })
 	}

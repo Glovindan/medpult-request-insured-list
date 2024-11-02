@@ -1,3 +1,4 @@
+@import url('CustomListSelector/customListSelector.scss');
 .custom-list {
 	&__header {
 		background: #f9f9fa;
@@ -6,7 +7,7 @@
 		align-items: center;
 
 		& > div {
-			padding: 0px 20px;
+			padding-right: 20px;
 			height: 52px;
 			align-items: center;
 			display: flex;

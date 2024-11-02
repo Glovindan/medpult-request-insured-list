@@ -1,26 +1,33 @@
-import React from 'react';
-import Header from '../Header/Header';
-import SelectTaskFiltersForm from '../SelectTaskFiltersForm/SelectTaskFiltersForm';
-import SelectTaskList from '../SelectTaskList/SelectTaskList';
+import React, { useEffect } from 'react';
+import CustomList from '../../../UIKit/CustomList/CustomList';
+import { ItemData, ListColumnData } from '../../../UIKit/CustomList/CustomListTypes';
+import { InsuredListData } from '../../shared/types';
+import Scripts from '../../shared/utils/clientScripts';
+import { insuredListContext } from '../../stores/InsuredListContext';
 
 /** Список застрахованных */
 export default function InsuredList() {
+	// const { data, setValue } = insuredListContext.useContext();
+
+	/** Колонки списка */
+	const columns = [
+		new ListColumnData({ name: "ФИО застрахованного", code: "fullname", fr: 1, isSortable: true, isLink: false }),
+		new ListColumnData({ name: "Дата рождения", code: "birthdate", fr: 1, isSortable: true, isLink: false }),
+		new ListColumnData({ name: "Телефон", code: "phone", fr: 1, isSortable: true, isLink: false }),
+		new ListColumnData({ name: "Email", code: "email", fr: 1, isSortable: true, isLink: false }),
+		new ListColumnData({ name: "Полис", code: "policy", fr: 1, isSortable: true, isLink: false }),
+		new ListColumnData({ name: "Дата начала действия полиса", code: "policyStartDate", fr: 1, isSortable: true, isLink: false }),
+		new ListColumnData({ name: "Дата окончания действия полиса", code: "policyEndDate", fr: 1, isSortable: true, isLink: false }),
+		new ListColumnData({ name: "Срок действия полиса", code: "policyTerm", fr: 1, isSortable: true, isLink: false }),
+		new ListColumnData({ name: "Регион действия полиса", code: "policyRegion", fr: 1, isSortable: true, isLink: false }),
+		new ListColumnData({ name: "Продукт", code: "policyProduct", fr: 1, isSortable: true, isLink: false }),
+		new ListColumnData({ name: "План страхования", code: "plan", fr: 1, isSortable: true, isLink: false }),
+		new ListColumnData({ name: "", code: "moreButton", fr: 1, isSortable: false, isLink: true, onClick: (props) => { console.log(props) } }),
+	]
 
 	return (
-		<div className="select-task-form">
-			<div className="select-task-form__header">
-				<Header clickFilterHandler={toggleShowFilters} elementsCount={data.elementsCount} title='Форма отбора задач' />
-			</div>
-			<div className="select-task-form__content" ref={contentWrapperRef}>
-				<div className={`select-task-form__filters${!isShowFilters ? " select-task-form__filters_hidden" : ""}`}>
-					<SelectTaskFiltersForm />
-				</div>
-				<div className="select-task-form__list">
-					<div>
-						<SelectTaskList width={listWidth} />
-					</div>
-				</div>
-			</div>
+		<div className="select-task-list">
+			<CustomList<undefined, InsuredListData> columnsSettings={columns} getDataHandler={Scripts.getInsuredList} isSelectable={true} isMultipleSelect={false} height='70vh' listWidth={2000} />
 		</div>
 	)
 }

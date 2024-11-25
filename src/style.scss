@@ -3,6 +3,7 @@
 @import url('./reset.scss');
 @import url('./UIKit/shared/style.scss');
 @import url('../src/App/components/InsuredList/insuredList.scss');
+@import url('../src/App/components/TabButton/tabButton.scss');
 
 :root {
 	--medpult-bg-color: #f2f4f6;
@@ -31,6 +32,6 @@
 	display: none !important;
 }
 
-svg {
+#insured-list-root svg {
 	color: transparent;
 }

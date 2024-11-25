@@ -48,6 +48,19 @@ async function getInsuredList(
 	}
 }
 
+/** Удалить застрахованных из списка */
+async function removeInsured(contractorsIds: string[]) {
+	// TODO
+}
+
+/** Получить путь к форме отбора застрахованных */
+function getSelectInsuredPageLink(): string {
+	// TODO
+	return '#test'
+}
+
 export default {
 	getInsuredList,
+	removeInsured,
+	getSelectInsuredPageLink,
 }

@@ -4,6 +4,9 @@ import { ItemData, ListColumnData } from '../../../UIKit/CustomList/CustomListTy
 import { InsuredListData } from '../../shared/types';
 import Scripts from '../../shared/utils/clientScripts';
 import { insuredListContext } from '../../stores/InsuredListContext';
+import icons from '../../../UIKit/shared/icons';
+import TabButton from '../TabButton/TabButton';
+import { redirectSPA } from '../../shared/utils/utils';
 
 /** Список застрахованных */
 export default function InsuredList() {
@@ -29,17 +32,47 @@ export default function InsuredList() {
 	const [selectedContractorsIds, setSelectedContractorsIds] = useState<string[]>([]);
 	useEffect(() => console.log(selectedContractorsIds), [selectedContractorsIds])
 
+	const handleAddClick = async () => {
+		// Открыть форму отбора застрахованных с множественным выбором
+		const selectInsuredPage = Scripts.getSelectInsuredPageLink();
+		const href = `${selectInsuredPage}?field_id=medpult-request-insured-list&select_multiple`
+		redirectSPA(href)
+	}
+
+	const [reloadHandler, setReloadHandler] = useState<() => void>(() => { });
+
+	/** Установка обработчика нажатия на поиск */
+	const setSearchHandler = (callback: () => void) => {
+		setReloadHandler(() => callback);
+	};
+
+	const handleRemoveClick = async () => {
+		// Убрать пользователей из обращения
+		await Scripts.removeInsured(selectedContractorsIds);
+		setSelectedContractorsIds([])
+		// Обновить список
+		reloadHandler()
+	}
+
 	return (
-		<div className="select-task-list">
-			<CustomList<undefined, InsuredListData>
-				columnsSettings={columns}
-				getDataHandler={Scripts.getInsuredList}
-				isSelectable={true}
-				isMultipleSelect={true}
-				height='500px'
-				listWidth={2000}
-				setSelectedItems={(ids: string[]) => setSelectedContractorsIds(ids)}
-			/>
+		<div className="insured-list">
+			<div className='insured-list__actions'>
+				<TabButton svg={icons.Add} clickHandler={handleAddClick} title='добавить' />
+				{Boolean(selectedContractorsIds.length) && <TabButton svg={icons.Delete} clickHandler={handleRemoveClick} title={`удалить: ${selectedContractorsIds.length}`} />}
+			</div>
+			<div className='insured-list__list'>
+				<CustomList<undefined, InsuredListData>
+					columnsSettings={columns}
+					getDataHandler={Scripts.getInsuredList}
+					isSelectable={true}
+					isMultipleSelect={true}
+					height='500px'
+					listWidth={2000}
+					setSelectedItems={(ids: string[]) => setSelectedContractorsIds(ids)}
+					selectedItems={selectedContractorsIds}
+					setSearchHandler={setSearchHandler}
+				/>
+			</div>
 		</div>
 	)
 }

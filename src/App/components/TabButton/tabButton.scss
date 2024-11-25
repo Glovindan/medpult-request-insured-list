@@ -1,0 +1,51 @@
+.tab-button {
+	&:active {
+		opacity: 0.6;
+	}
+
+	&__icon {
+		color: transparent;
+		width: 24px;
+		height: 24px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	&__title {
+		font-family: 'Inter';
+		font-style: normal;
+		font-weight: 600;
+		font-size: 13px;
+		line-height: 16px;
+		display: flex;
+		align-items: center;
+		text-align: center;
+		text-transform: uppercase;
+		color: #6b6b6f;
+	}
+
+	&__loader {
+		height: 48px;
+		width: 130px;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		overflow: hidden;
+	}
+
+	display: flex;
+	flex-direction: row;
+	padding: 8px 12px;
+	gap: 8px;
+
+	align-items: center;
+	justify-content: center;
+	height: 48px;
+	background-color: transparent;
+
+	outline: none;
+	border: none;
+	cursor: pointer;
+}

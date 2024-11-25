@@ -32,12 +32,14 @@ type ListProps<SearchDataType = any, ItemType = any> = {
 	/** Множественный выбор строк */
 	isMultipleSelect?: boolean
 	/** Присвоить выбранные строки */
+	selectedItems?: string[]
+	/** Присвоить выбранные строки */
 	setSelectedItems?: (ids: string[]) => void
 }
 
 /** Список данных в виде таблицы */
 function CustomList<SearchDataType = any, ItemType = any>(props: ListProps<SearchDataType, ItemType>) {
-	const { height = "100%", listWidth, columnsSettings, getDataHandler, searchData, setSearchHandler, isScrollable = true, getDetailsLayout, isMultipleSelect, isSelectable, setSelectedItems } = props;
+	const { height = "100%", listWidth, columnsSettings, getDataHandler, searchData, setSearchHandler, isScrollable = true, getDetailsLayout, isMultipleSelect, isSelectable, selectedItems = [], setSelectedItems } = props;
 
 	// Страница
 	const [page, setPage] = useState<number>(0);
@@ -109,7 +111,6 @@ function CustomList<SearchDataType = any, ItemType = any>(props: ListProps<Searc
 	/** Установить обработчик нажатия на кнопку поиск */
 	useEffect(() => {
 		if (!setSearchHandler) return;
-
 		setSearchHandler(() => { reloadData() });
 	}, [searchData, sortData])
 
@@ -131,26 +132,23 @@ function CustomList<SearchDataType = any, ItemType = any>(props: ListProps<Searc
 		return element.offsetWidth - element.clientWidth;
 	}
 
-	/** Идентификаторы выбранных строк */
-	const [checkedRowsIds, setCheckedRowsIds] = useState<string[]>([]);
-	/** Передача выбранных элементов наружу */
-	useEffect(() => {
-		if (setSelectedItems) setSelectedItems(checkedRowsIds);
-	}, [checkedRowsIds])
+	const setCheckedRowsIds = (ids: string[]) => {
+		if (setSelectedItems) setSelectedItems(ids);
+	}
 
 	/** Добавление/удаление выбранной строки */
 	const toggleCheckedRow = (id: string) => {
-		const findId = checkedRowsIds.find(checkedId => checkedId === id);
+		const findId = selectedItems.find(checkedId => checkedId === id);
 
 		// Удаление
 		if (findId) {
-			setCheckedRowsIds(checkedRowsIds.filter(checkedId => checkedId != id));
+			setCheckedRowsIds(selectedItems.filter(checkedId => checkedId != id));
 			return
 		}
 
 		// Добавление
 		if (isMultipleSelect) {
-			setCheckedRowsIds([...checkedRowsIds, id]);
+			setCheckedRowsIds([...selectedItems, id]);
 		} else {
 			setCheckedRowsIds([id]);
 		}
@@ -218,7 +216,7 @@ function CustomList<SearchDataType = any, ItemType = any>(props: ListProps<Searc
 							setOpenRowIndex={toggleShowDetails}
 							reloadData={reloadData}
 							toggleChecked={() => toggleCheckedRow(item.id)}
-							isChecked={Boolean(checkedRowsIds.find(checkedId => checkedId === item.id))}
+							isChecked={Boolean(selectedItems.find(checkedId => checkedId === item.id))}
 						/>
 					})}
 					{isLoading && <Loader />}

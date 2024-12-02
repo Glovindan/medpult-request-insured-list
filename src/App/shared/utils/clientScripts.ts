@@ -59,8 +59,14 @@ function getSelectInsuredPageLink(): string {
 	return '#test'
 }
 
+/** Открыть форму контрагента по id */
+function openContractorById(id: string): void {
+	// TODO
+}
+
 export default {
 	getInsuredList,
 	removeInsured,
 	getSelectInsuredPageLink,
+	openContractorById,
 }

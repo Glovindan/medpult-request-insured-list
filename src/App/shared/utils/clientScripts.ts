@@ -63,10 +63,20 @@ function getSelectInsuredPageLink(): string {
 function openContractorById(id: string): void {
 	// TODO
 }
+/** Получить количество застрахованных */
+async function getInsuredCount(): Promise<number> {
+	return 5
+}
+/** Имеет ли обращение задачи */
+async function checkAppealHasTask(): Promise<boolean> {
+	return true
+}
 
 export default {
 	getInsuredList,
 	removeInsured,
 	getSelectInsuredPageLink,
 	openContractorById,
+	getInsuredCount,
+	checkAppealHasTask,
 }

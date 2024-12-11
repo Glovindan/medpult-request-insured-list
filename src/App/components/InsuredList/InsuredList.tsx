@@ -46,13 +46,6 @@ export default function InsuredList() {
 			isLink: false,
 		}),
 		new ListColumnData({
-			name: 'Срок действия полиса',
-			code: 'policyTerm',
-			fr: 1,
-			isSortable: true,
-			isLink: false,
-		}),
-		new ListColumnData({
 			name: 'Регион действия полиса',
 			code: 'policyRegion',
 			fr: 1,

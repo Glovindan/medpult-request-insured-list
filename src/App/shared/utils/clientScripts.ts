@@ -28,7 +28,7 @@ async function getInsuredList(
 		policy: new ItemData({ value: 'TS00000001/23', info: 'test' }),
 		policyStartDate: new ItemData({ value: 'TS00000001/23', info: 'test' }),
 		policyEndDate: new ItemData({ value: 'TS00000001/23', info: 'test' }),
-		policyTerm: new ItemData({ value: 'TS00000001/23', info: 'test' }),
+		//policyTerm: new ItemData({ value: 'TS00000001/23', info: 'test' }),
 		policyRegion: new ItemData({ value: 'TS00000001/23', info: 'test' }),
 		policyProduct: new ItemData({ value: 'TS00000001/23', info: 'test' }),
 		plan: new ItemData({ value: 'TS00000001/23', info: 'test' }),

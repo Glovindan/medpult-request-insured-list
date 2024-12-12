@@ -83,6 +83,14 @@ export default function InsuredList() {
 	useEffect(() => console.log(selectedContractorsIds), [selectedContractorsIds])
 
 	const handleAddClick = async () => {
+		const params = new window.URLSearchParams(window.location.search)
+		const mode = params.get('mode')
+		const isCreateMode = mode === 'create'
+		if (isCreateMode) {
+			if ((window as any).showError) (window as any).showError('Требуется сохранить обращение')
+			return
+		}
+
 		if (await Scripts.checkAppealHasTask()) {
 			if ((window as any).showError)
 				(window as any).showError('Невозможно добавить застрахованных, есть задача "в работе".')
@@ -101,6 +109,11 @@ export default function InsuredList() {
 		setReloadHandler(() => callback)
 	}
 
+	const fetchElementsCount = async () => {
+		const count = await Scripts.getInsuredCount()
+		setElementsCount(count)
+	}
+
 	const handleRemoveClick = async () => {
 		if (await Scripts.checkAppealHasTask()) {
 			if ((window as any).showError)
@@ -110,6 +123,8 @@ export default function InsuredList() {
 		// Убрать пользователей из обращения
 		await Scripts.removeInsured(selectedContractorsIds)
 		setSelectedContractorsIds([])
+
+		await fetchElementsCount()
 		// Обновить список
 		reloadHandler()
 	}
@@ -117,10 +132,6 @@ export default function InsuredList() {
 	const [elementsCount, setElementsCount] = useState<number>(0)
 	// Вычислить количество застрахованных
 	useEffect(() => {
-		async function fetchElementsCount() {
-			const count = await Scripts.getInsuredCount()
-			setElementsCount(count)
-		}
 		fetchElementsCount()
 	}, [])
 

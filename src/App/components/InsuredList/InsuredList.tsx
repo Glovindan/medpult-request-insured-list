@@ -85,8 +85,22 @@ export default function InsuredList() {
 	const handleAddClick = async () => {
 		// Открыть форму отбора застрахованных с множественным выбором
 		const selectInsuredPage = Scripts.getSelectInsuredPageLink();
-		const href = `${selectInsuredPage}?field_id=medpult-request-insured-list&select_multiple`
-		redirectSPA(href)
+
+		const currentUrl = new URL(window.location.href);
+		const requestId = currentUrl.searchParams.get("request_id");
+		// Если не указано обращение - не переходить
+		if(!requestId) return;
+
+		const redirectUrl = new URL(`${window.location.origin}/${selectInsuredPage}`);
+
+		// Выбор застрахованных для списка
+		redirectUrl.searchParams.set("field_id", "medpult-request-insured-list");
+		// Множественный выбор
+		redirectUrl.searchParams.set("select_multiple", "true");
+		// Установить идентификатор обращения
+		if(requestId) redirectUrl.searchParams.set("request_id", requestId);
+
+		redirectSPA(redirectUrl.toString())
 	}
 	const [reloadHandler, setReloadHandler] = useState<() => void>(() => {})
 

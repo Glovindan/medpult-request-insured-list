@@ -9,4 +9,19 @@
 		width: 100%;
 		overflow-x: auto;
 	}
+	&__count {
+		color: #666;
+		font-size: 16px;
+		font-weight: 400;
+		line-height: normal;
+		letter-spacing: 0.32px;
+		font-family: 'Inter';
+		font-style: normal;
+		display: flex;
+		align-items: center;
+		text-align: center;
+
+		margin-left: auto;
+		padding-right: 40px;
+	}
 }

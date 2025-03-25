@@ -83,22 +83,27 @@ export default function InsuredList() {
 	useEffect(() => console.log(selectedContractorsIds), [selectedContractorsIds])
 
 	const handleAddClick = async () => {
+		if (await Scripts.checkAppealHasTask()) {
+			if ((window as any).showError)
+				(window as any).showError('Невозможно добавить застрахованных, есть задача "в работе".')
+			return
+		}
 		// Открыть форму отбора застрахованных с множественным выбором
-		const selectInsuredPage = Scripts.getSelectInsuredPageLink();
+		const selectInsuredPage = Scripts.getSelectInsuredPageLink()
 
-		const currentUrl = new URL(window.location.href);
-		const requestId = currentUrl.searchParams.get("request_id");
+		const currentUrl = new URL(window.location.href)
+		const requestId = currentUrl.searchParams.get('request_id')
 		// Если не указано обращение - не переходить
-		if(!requestId) return;
+		if (!requestId) return
 
-		const redirectUrl = new URL(`${window.location.origin}/${selectInsuredPage}`);
+		const redirectUrl = new URL(`${window.location.origin}/${selectInsuredPage}`)
 
 		// Выбор застрахованных для списка
-		redirectUrl.searchParams.set("field_id", "medpult-request-insured-list");
+		redirectUrl.searchParams.set('field_id', 'medpult-request-insured-list')
 		// Множественный выбор
-		redirectUrl.searchParams.set("select_multiple", "true");
+		redirectUrl.searchParams.set('select_multiple', 'true')
 		// Установить идентификатор обращения
-		if(requestId) redirectUrl.searchParams.set("request_id", requestId);
+		if (requestId) redirectUrl.searchParams.set('request_id', requestId)
 
 		redirectSPA(redirectUrl.toString())
 	}
